@@ -10,11 +10,13 @@ Usage: $0 [-h] [-c <cardname>] [-C <capturedev>] [-P <playbackdev>] testname ...
 
 	-h:	Print help (this message)
 	-c:	Specify the card name to use (default is $default_cardname)
-	-C:	Specify ALSA device for capture
-	-P:	Specify ALSA device for playback
+	-C:	Specify ALSA device for capture (default is plughw:<CARDNAME>,1)
+	-P:	Specify ALSA device for playback (default is plughw:<CARDNAME>,0>
 
 Available tests:
 	recplay:	Record 10 seconds of stereo audio and then play it back
+	record:		Record 60 seconds of 6-channel audio to recordtest.wav
+	playback:	Loop a short 8-channel audio sample 60 times on the playback device
 EOF
 
 	exit 0
@@ -70,6 +72,30 @@ do_recplay_test() {
 for arg; do
 	if [ "$arg" = "recplay" ]; then
 		do_recplay_test
+	fi
+	if [ "$arg" = "record" ]; then
+		cmd="arecord -D$capdevice -c6 -r96000 -fS32_LE recordtest.wav"
+		eval $cmd
+		if [ "$?" -ne "0" ]; then
+			echo Error in command: "$cmd"
+			exit 1
+		fi
+	fi
+	if [ "$arg" = "playback" ]; then
+		bunzip2 nums_8ch_96k.wav.bz2
+		for i in 0 1 2 3 4 5; do
+			for j in 0 1 2 3 4 5 6 7 8 9; do
+				echo $i$j...
+				cmd="aplay -D$pbdevice -r96000 -c8 nums_8ch_96k.wav >/dev/null 2>&1"
+				eval $cmd
+				if [ "$?" -ne "0" ]; then
+					echo Error in command: "$cmd"
+					bzip2 nums_8ch_96k.wav
+					exit 1
+				fi
+			done
+		done
+		bzip2 nums_8ch_96k.wav
 	fi
 done
 
