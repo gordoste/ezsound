@@ -74,7 +74,7 @@ for arg; do
 		do_recplay_test
 	fi
 	if [ "$arg" = "record" ]; then
-		cmd="arecord -D$capdevice -c6 -r96000 -fS32_LE recordtest.wav"
+		cmd="arecord -D$capdevice -c6 -r96000 -fS32_LE -d60 recordtest.wav"
 		eval $cmd
 		if [ "$?" -ne "0" ]; then
 			echo Error in command: "$cmd"
