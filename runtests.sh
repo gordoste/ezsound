@@ -47,25 +47,36 @@ fi
 echo "Using '$capdevice' for capture"
 echo "Using '$pbdevice' for playback"
 
+exec_cmd() {
+	quiet=$1
+	shift
+	cmd="$*"
+	if [ "$quiet" -ne "0" ]; then
+		echo $cmd
+	fi
+	eval $cmd
+	return $?
+}
+
 do_recplay_test() {
 	read -p "Press enter to start recording for 10 seconds"
 
-	arecord -Vstereo -d10 -D$capdevice -r96000 -c2 -fS32_LE sample.wav
-
-	if [ "$?" -ne 0 ]; then
-		echo "Recording error... aborting"
+	exec_cmd 1 arecord -Vstereo -d10 -D$capdevice -r96000 -c2 -fS32_LE sample.wav
+	if [ "$?" -ne "0" ]; then
+		echo Error encountered... aborting
 		exit 1
 	fi
+
 	echo
 
 	read -p "Press enter to play back recorded file"
 
-	aplay -Vstereo -D$pbdevice -r96000 -c2 -fS32_LE sample.wav
-
-	if [ "$?" -ne 0 ]; then
-		echo "Playback error... aborting"
-		exit 2
+	exec_cmd 1 aplay -Vstereo -D$pbdevice -r96000 -c2 -fS32_LE sample.wav
+	if [ "$?" -ne "0" ]; then
+		echo Error encountered... aborting
+		exit 1
 	fi
+
 	echo
 }
 
@@ -74,8 +85,7 @@ for arg; do
 		do_recplay_test
 	fi
 	if [ "$arg" = "record" ]; then
-		cmd="arecord -D$capdevice -c6 -r96000 -fS32_LE -d60 recordtest.wav"
-		eval $cmd
+		exec_cmd 0 "arecord -D$capdevice -c6 -r96000 -fS32_LE -d60 recordtest.wav"
 		if [ "$?" -ne "0" ]; then
 			echo Error in command: "$cmd"
 			exit 1
@@ -85,9 +95,8 @@ for arg; do
 		bunzip2 nums_8ch_96k.wav.bz2
 		for i in 0 1 2 3 4 5; do
 			for j in 0 1 2 3 4 5 6 7 8 9; do
-				echo $i$j...
-				cmd="aplay -D$pbdevice -r96000 -c8 nums_8ch_96k.wav >/dev/null 2>&1"
-				eval $cmd
+				echo $i$j/60...
+				exec_cmd 0 "aplay -D$pbdevice -r96000 -c8 nums_8ch_96k.wav >/dev/null 2>&1"
 				if [ "$?" -ne "0" ]; then
 					echo Error in command: "$cmd"
 					bzip2 nums_8ch_96k.wav
