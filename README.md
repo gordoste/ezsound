@@ -14,4 +14,4 @@ Everything should work automatically if the above requirements are met.
 
 # OTHER FILES:
 
-`Makefile`, `ezsound-6x8.conf`: It should never be necessary and is not recommended, but you can flash the card's EEPROM by running `make`. Note that this will run commands as root - make sure you understand what it is doing. You will need `cmake` installed on your system for this to work. 
+`Makefile`, `ezsound-6x8.conf`: It should never be necessary and is not recommended, but you can flash the card's EEPROM by running `make flash`. Note that this will run commands as root - make sure you understand what it is doing. You will need `cmake` installed on your system for this to work. 
