@@ -10,7 +10,7 @@ Everything should work automatically if the above requirements are met.
 # UTILITIES:
 
 * `reprobe.sh`: If the card did not have power when the Pi was booted, then it will not have been detected. This script can be run as root to scan for the card. Once it is detected, you can use it as normal.
-* `runtests.sh`: This script shows how to capture 10 seconds of stereo audio via the ezsound's capture interface to `sample.wav` and play it back via the playback interface.
+* `runtests.sh`: This script shows examples of various things you can do with basic ALSA utilities. Use `runtests.sh -h` to get a list.
 
 # OTHER FILES:
 
