@@ -5,9 +5,15 @@ This repo contains files related to the ezsound 6x8 isolated soundcard.
 Before installing, check the card requirements below to confirm your Raspberry Pi is configured correctly.
 
 1. Install the HAT (the smaller board) on your Raspberry Pi. Be sure to orient it correctly and check that the pins are aligned properly. **WARNING**: It is possible to accidentally install the board one pin to the left/right, or around the wrong way. If power is applied when installed incorrectly, this can cause permanent damage.
+
+![Correct alignment](images/install_alignment_small.jpeg)
+
 2. Use the supplied 2-wire cable to connect 6VOUT on the I/O board to 6VIN on the HAT.
 3. Use the supplied 14-pin and 20-pin IDC cables to connect the HAT to the I/O board.
 4. Connect a 9-15V DC supply to the I/O board's power input (+ve centre barrel jack). The soundcard requires less than 0.5A.
+
+![Cables installed for the ezsound](images/install_cables_small.jpeg)
+
 5. Turn on the power supply first, and then the Pi. If you started the Pi before applying power to the board, you can use `reprobe.sh` from this repository to enable the sounodcard.
 
 Note that the supplied 3-way cables are only needed if you separate the sections of the I/O board (see below).
@@ -15,6 +21,8 @@ Note that the supplied 3-way cables are only needed if you separate the sections
 # SEPARATING THE I/O BOARD SECTIONS
 
 The three sections of the I/O board are designed so that you can easily separate them if needed. Just cut along the dashed lines with a rotary tool or fine-toothed hand saw. You should wear a mask while doing this, as the PCB material can be harmful if inhaled. Once the sections are separated, you will need to provide power to each section by connecting the supplied 3-way cables.
+
+![Separated boards](images/install_power_small.jpeg)
 
 # CARD REQUIREMENTS:
 
