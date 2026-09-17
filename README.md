@@ -10,6 +10,12 @@ Before installing, check the card requirements below to confirm your Raspberry P
 4. Connect a 9-15V DC supply to the I/O board's power input (+ve centre barrel jack). The soundcard requires less than 0.5A.
 5. Turn on the power supply first, and then the Pi. If you started the Pi before applying power to the board, you can use `reprobe.sh` from this repository to enable the sounodcard.
 
+Note that the supplied 3-way cables are only needed if you separate the sections of the I/O board (see below).
+
+# SEPARATING THE I/O BOARD SECTIONS
+
+The three sections of the I/O board are designed so that you can easily separate them if needed. Just cut along the dashed lines with a rotary tool or fine-toothed hand saw. You should wear a mask while doing this, as the PCB material can be harmful if inhaled. Once the sections are separated, you will need to provide power to each section by connecting the supplied 3-way cables.
+
 # CARD REQUIREMENTS:
 
 The card requires a Raspberry Pi 5 or Compute Module 5, as these models are the only ones with an 8-channel I2S sound interface.
